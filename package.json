@@ -17,8 +17,12 @@
     "category": "Unity",
     "files": [
         "/LICENSE",
+        "/LICENSE.meta",
         "/README.md",
+        "/README.md.meta",
         "/com",
-        "/package.json"
+        "/com.meta",
+        "/package.json",
+        "/package.json.meta"
     ]
 }
