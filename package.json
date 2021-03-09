@@ -1,7 +1,7 @@
 {
     "name": "com.alexbola.abinder",
     "displayName": "ABinder",
-    "version": "1.0.0",
+    "version": "v1.0.5-alpha",
     "unity": "2018.3",
     "description": "Tiny framework which gives ability to bind different types of data to Unity components fast and simply.",
     "author": {
