@@ -58,7 +58,14 @@ namespace com.ABinder.Editor
                                                                                        bindToAtr.BindToTypes.Contains(p.PropertyType)).ToArray();
                 resultProps = bindableProps.Select(p => c.GetType().Name + "-" + p.Name).ToArray();
                 // Attempt to get selected property by Hash.
-                propIndex = resultProps.IndexOf(n => n.GetHashCode().Equals(hash.intValue));
+                for (int i = 0; i < resultProps.Length; i++)
+                {
+                    if (resultProps[i].GetHashCode().Equals(hash.intValue))
+                    {
+                        propIndex = i;
+                        break;
+                    }
+                }
                 PropertyInfo selectedProperty = propIndex < 0 ? null : bindableProps[propIndex];
                 if (propIndex < 0 && index.intValue > -1 && bindableProps.Count() > index.intValue)
                 {

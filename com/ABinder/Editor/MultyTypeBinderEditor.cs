@@ -9,7 +9,7 @@ using UnityEngine;
 namespace com.ABinder.Editor
 {
     [CustomEditor(typeof(SimpleTypeBinder), true)]
-    public class SimpleTypeBinderEditor : ABinderEditor
+    public class MultyTypeBinderEditor : ABinderEditor
     {
         SerializedProperty targetObject;
         SerializedProperty targetProperty;
@@ -53,8 +53,15 @@ namespace com.ABinder.Editor
             List<KeyValuePair<Component, PropertyInfo>> propertyInfos = components.SelectMany(c => c.GetType().GetProperties().Where(p => p.CanWrite && CurrentSourcePropType == p.PropertyType), (c, info) => new KeyValuePair<Component, PropertyInfo>(c, info)).ToList();
 
             var propList = propertyInfos.Select(pair => pair.Key.GetType().Name + "-" + pair.Value.Name).ToArray();
-            
-            var propIndex = propList.IndexOf(n => n.GetHashCode().Equals(targetHash.intValue));
+            var propIndex = -1;
+            for (int i = 0; i < propList.Length; i++)
+            {
+                if (propList[i].GetHashCode().Equals(targetHash.intValue))
+                {
+                    propIndex = i;
+                    break;
+                }
+            }
             PropertyInfo selectedTProperty = propIndex < 0 ? null : propertyInfos[propIndex].Value;
 
             if (selectedTProperty != null)
@@ -63,7 +70,7 @@ namespace com.ABinder.Editor
                 targetProperty.stringValue = selectedTProperty.Name;
             }
             targetIndex.intValue = EditorGUILayout.Popup("Target Property", propIndex, propList);
-            if (propList.Length > 0 && targetIndex.intValue > 0)
+            if (propList.Length > 0 && targetIndex.intValue >= 0)
                 targetHash.intValue = propList[targetIndex.intValue].GetHashCode();
             serializedObject.ApplyModifiedProperties();
             if (targetIndex.intValue < 0)

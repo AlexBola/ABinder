@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Assets.Scripts.Bgm.Utils;
 using UnityEngine;
-using Come2Play.UnityLogger;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,8 +16,6 @@ namespace com.ABinder
         [HideInInspector] public int CurrentIndex = -1;
         [HideInInspector] public int CurrentHash = 0;
         [HideInInspector] public string PropertyName = "";
-
-        private static Logger<ABinder> _logger = new Logger<ABinder>();
 
         private bool _hasBeenInited;
         private IBindSource _currentSource;
@@ -150,7 +146,7 @@ namespace com.ABinder
         private static void NewOpenForRigidBody(MenuCommand command)
         {
             ABinder binder = (ABinder) command.context;
-            _logger.Debug("binder: {0}", binder);
+            Debug.Log("binder: {0}", binder);
             MethodInfo dynMethod = binder.GetType().GetMethod("Bind", BindingFlags.NonPublic | BindingFlags.Instance);
             dynMethod.Invoke(binder, new object[0]);
         }

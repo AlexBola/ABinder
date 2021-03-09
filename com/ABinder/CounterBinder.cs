@@ -107,12 +107,12 @@ namespace com.ABinder
 
             if (_useFormatNum)
             {
-                result = _minValue < 0 ? value.ToPriceFormat() : value.ToPriceFormat(_minValue);
+                result = _minValue < 0 ? value.ToString("N2") : value.ToString("N");
             }
 
             if (_useBalanceFormatNum)
             {
-                result = value.ToBalanceFormat();
+                result = value.ToString("N2");
             }
 
             // Apply text mask if needed

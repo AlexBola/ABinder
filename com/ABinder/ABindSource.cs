@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace com.ABinder
 {
-    public abstract class AInjectableSource : ReactiveViewBase, IBindSource
+    public abstract class ABindSource : MonoBehaviour, IBindSource
     {
         [SerializeField]
         private bool _readyToBind;

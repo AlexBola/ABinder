@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Reflection;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace com.ABinder
 {
@@ -8,18 +8,25 @@ namespace com.ABinder
     public class ColorBinder : ABinder
     {
         [SerializeField]
-        private Image _image;
-
-        protected override void Init()
-        {
-            base.Init();
-            if (_image == null)
-                _image = GetComponent<Image>();
-        }
+        private Component _target;
+        [HideInInspector]
+        public string TargetPropertyName = "";
+        [HideInInspector]
+        public int TargetCurrentIndex = 0;
+        [HideInInspector]
+        public int TargetCurrentHash = 0;
 
         protected override void Bind()
         {
-            _image.color = (Color)GetSourceValue();
+            var value = GetSourceValue();
+            //_logger.Debug(String.Format("<color=green> target: {0} property name: {1} value: {2} </color>", _target.GetType().TemplateKey, PropertyName, GetSourceValue()));
+            if (_target == null)
+                throw new Exception("Target reference shouldn't be null!");
+            if (!IsSourceReady)
+                throw new Exception("Source isn't ready to bind yet!");
+            PropertyInfo propInfo = _target.GetType().GetProperty(TargetPropertyName);
+            propInfo.SetValue(_target, value, null);
+            //_textLabel.text = GetSourceValue() as String;
         }
     }
 }
